@@ -1,0 +1,142 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+\title{Asteroids}
+\date{23. Juni 2016}
+
+\begin{document}
+\maketitle
+
+\section{Gameloop}
+
+\section{Movement}
+\subsection{Homogene Koordinaten}
+\subsubsection{Karthesische Koordinaten zu homogenen Koordinaten}
+\begin{description}
+ \item[Ortsvektoren:]
+  \begin{equation}
+   \left(\begin{array}{c}
+    x \\
+    y \\
+   \end{array}\right)
+   \rightarrow
+   \left(\begin{array}{c}
+    x \\
+    y \\
+    1 \\
+   \end{array}\right)
+  \end{equation}
+
+ \item[Richtungsvektoren:]
+  \begin{equation}
+   \left(\begin{array}{c}
+    x \\
+    y \\
+   \end{array}\right)
+   \rightarrow
+   \left(\begin{array}{c}
+    x \\
+    y \\
+    0 \\
+   \end{array}\right)
+  \end{equation}
+\end{description}
+
+\subsubsection{Rotation und Translation}
+\begin{description}
+ \item[Rotationsmatriz]
+  für Rotation um $\varphi$ entgegen dem Uhrzeigersinn:
+  \begin{equation}
+   \left(\begin{array}{ccc}
+    cos(\varphi) & -sin(\varphi) & 0 \\
+    sin(\varphi) & cos(\varphi) & 0 \\
+    0 & 0 & 1 \\
+   \end{array}\right)
+  \end{equation}
+  Anwendung:
+  \begin{equation}
+   \left(\begin{array}{ccc}
+    cos(\varphi) & -sin(\varphi) & 0 \\
+    sin(\varphi) & cos(\varphi) & 0 \\
+    0 & 0 & 1 \\
+   \end{array}\right)
+   \cdot
+   \left(\begin{array}{ccc}
+    x \\
+    y \\
+    1 \\
+   \end{array}\right)
+   =
+   \left(\begin{array}{ccc}
+    x \cdot cos(\varphi) - y \cdot sin(\varphi) \\
+    x \cdot sin(\varphi) + y \cdot cos(\varphi) \\
+    1 \\
+   \end{array}\right)
+  \end{equation}
+  Beispiel: Den Punkt $(2, 1)^{T}$ um $90^{\circ}$ rotieren.
+  \begin{equation}
+   \left(\begin{array}{ccc}
+    cos(90^{\circ}) & -sin(90^{\circ}) & 0 \\
+    sin(90^{\circ}) & cos(90^{\circ}) & 0 \\
+    0 & 0 & 1 \\
+   \end{array}\right)
+   \cdot
+   \left(\begin{array}{ccc}
+    2 \\
+    1 \\
+    1 \\
+   \end{array}\right)
+   =
+   \left(\begin{array}{ccc}
+    -1 \\
+    2 \\
+    1 \\
+   \end{array}\right)
+  \end{equation}
+
+ \item[Translation:]
+  \begin{equation}
+   \left(\begin{array}{ccc}
+    1 & 0 & t_{x} \\
+    0 & 1 & t_{y} \\
+    0 & 0 & 1 \\
+   \end{array}\right)
+  \end{equation}
+  Anwendung:
+  \begin{equation}
+   \left(\begin{array}{ccc}
+    1 & 0 & t_{x} \\
+    0 & 1 & t_{y} \\
+    0 & 0 & 1 \\
+   \end{array}\right)
+   \cdot
+   \left(\begin{array}{ccc}
+    x \\
+    y \\
+    1 \\
+   \end{array}\right)
+   =
+   \left(\begin{array}{ccc}
+    x + t_{x} \\
+    y + t_{y} \\
+    1 \\
+   \end{array}\right)
+  \end{equation}
+\end{description}
+Vorteil von homogenen Koordinaten:
+Eine beliebige Verkettung aufeinanderfolgender Translationen
+und Rotationen kann zu einer Matrix zusammengefasst werden.
+
+
+\section{Pew! Pew! Pew!}
+
+\section{Kollisionserkennung}
+\subsection{Kreis mit Kreis}
+
+\subsection{Konvexes Polygon mit konvexem Polygon}
+
+\subsection{konvexem Polygon mit Kreis}
+
+\end{document}
