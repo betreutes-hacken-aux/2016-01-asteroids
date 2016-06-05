@@ -13,6 +13,10 @@
 
 \section{Movement}
 \subsection{Homogene Koordinaten}
+Der Vorteil von homogenen Koordinaten besteht darin,
+dass sich eine beliebige Verkettung
+aufeinanderfolgender Translationen und Rotationen
+zu einer Matrix zusammengefasst werden kann.
 \subsubsection{Karthesische Koordinaten zu homogenen Koordinaten}
 \begin{description}
  \item[Ortsvektoren:]
@@ -66,13 +70,13 @@
    \left(\begin{array}{ccc}
     x \\
     y \\
-    1 \\
+    w \\
    \end{array}\right)
    =
    \left(\begin{array}{ccc}
     x \cdot cos(\varphi) - y \cdot sin(\varphi) \\
     x \cdot sin(\varphi) + y \cdot cos(\varphi) \\
-    1 \\
+    w \\
    \end{array}\right)
   \end{equation}
   Beispiel: Den Punkt $(2, 1)^{T}$ um $90^{\circ}$ rotieren.
@@ -104,7 +108,7 @@
     0 & 0 & 1 \\
    \end{array}\right)
   \end{equation}
-  Anwendung:
+  Anwendung auf einen Richtungsvektor:
   \begin{equation}
    \left(\begin{array}{ccc}
     1 & 0 & t_{x} \\
@@ -119,24 +123,39 @@
    \end{array}\right)
    =
    \left(\begin{array}{ccc}
-    x + t_{x} \\
-    y + t_{y} \\
+    x + t_{x} \cdot w \\
+    y + t_{y} \cdot w \\
     1 \\
    \end{array}\right)
   \end{equation}
+  Beobachtung:
+  Eine Translation wirkt nur auf Ortsvektoren,
+  nicht auf Richtungsvektoren.
 \end{description}
-Vorteil von homogenen Koordinaten:
-Eine beliebige Verkettung aufeinanderfolgender Translationen
-und Rotationen kann zu einer Matrix zusammengefasst werden.
+
+\subsection{OpenGL 2.x}
+\texttt{glRotate}
+\texttt{glTranslate}
+
+\subsection{OpenGL 4.x}
 
 
 \section{Pew! Pew! Pew!}
 
-\section{Kollisionserkennung}
+\section{Schnitterkennung}
 \subsection{Kreis mit Kreis}
+Ein Kreis lässt sich über seine Position~$(x, y)^{T}$
+und seinen Radius~$r$ spezifizieren.
+Zwei Kreise mit Positionen~$(x_{1}, y_{1})^{T}$ und~$(x_{2}, y_{2})^{T}$
+und Radien~$r_{1}$ und~$r_{2}$ überschneiden sich genau dann,
+wenn $\sqrt{(x_{1} - x_{2})^{2} + (y_{1} - y_{2})^{2}} < r_{1} + r_{2}$.
 
 \subsection{Konvexes Polygon mit konvexem Polygon}
+Zwei konvexe Polygone~$P_{1}$ und~$P_{2}$ überschneiden sich genau dann,
+wenn es keine Trennlinie gibt.
 
 \subsection{konvexem Polygon mit Kreis}
+
+\bibliography{referenzen.bib}
 
 \end{document}
