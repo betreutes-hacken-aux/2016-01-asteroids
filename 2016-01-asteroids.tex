@@ -13,6 +13,8 @@
 
 \section{Movement}
 \subsection{Homogene Koordinaten}
+(Die in diesem Abschnitt für 2D behandelten Techniken
+lassen sich ohne Probleme auf 3D übertragen.)
 Der Vorteil von homogenen Koordinaten besteht darin,
 dass sich eine beliebige Verkettung
 aufeinanderfolgender Translationen und Rotationen
@@ -119,23 +121,37 @@ zu einer Matrix zusammengefasst werden kann.
    \left(\begin{array}{ccc}
     x \\
     y \\
-    1 \\
+    w \\
    \end{array}\right)
    =
    \left(\begin{array}{ccc}
     x + t_{x} \cdot w \\
     y + t_{y} \cdot w \\
-    1 \\
+    w \\
    \end{array}\right)
   \end{equation}
   Beobachtung:
   Eine Translation wirkt nur auf Ortsvektoren,
-  nicht auf Richtungsvektoren.
+  nicht auf Richtungsvektoren,
+  da für diese $w = 0$.
 \end{description}
 
 \subsection{OpenGL 2.x}
-\texttt{glRotate}
-\texttt{glTranslate}
+Zwei Matrizen:
+\begin{description}
+ \item[Modelview Matrix]
+ \item[Projection Matrix]
+\end{description}
+\texttt{glMatrixMode(mode)} legt fest,
+welche Matrix aktuell bearbeitet werden soll.
+Diese kann mit Befehlen wie
+\texttt{glPopMatrix},
+\texttt{glLoadIdentity},
+\texttt{glPushMatrix},
+\texttt{glMultMatrix},
+\texttt{glRotated} und
+\texttt{glTranslated}
+bearbeitet werden.
 
 \subsection{OpenGL 4.x}
 
