@@ -198,7 +198,10 @@ bearbeitet werden.
 \begin{frame}
 \frametitle{Kollision}
 \framesubtitle{Schnitt geometrischer Objekte}
-\input{images/dummy.tex}
+\begin{center}
+\input{images/dummy_square.tex}
+\input{images/dummy_square.tex}
+\end{center}
 \textbf{Vorteil:} einfach zu realisieren \\
 \textbf{Nachtteil:} nicht exakt
 \end{frame}
@@ -231,7 +234,7 @@ Die Kreise schneiden sich genau dann, wenn
 \begin{center}
 {\LARGE Zu einfach?} \\
 \vspace{0.4cm}
-{\LARGE Keine Sorge. Es wird besser.}
+\only<2>{\LARGE Keine Sorge. Es wird besser.}
 \end{center}
 \end{frame}
 
@@ -240,6 +243,13 @@ Die Kreise schneiden sich genau dann, wenn
 \framesubtitle{Schnitt geometrischer Objekte}
 \textbf{Konvexes Polygon mit konvexem Polygon}
 \input{images/konvPolygon_01.tex}
+\end{frame}
+
+\begin{frame}
+\frametitle{Kollision}
+\framesubtitle{Schnitt geometrischer Objekte}
+\textbf{Konvexes Polygon mit Kreis}
+\input{images/konvPolygon_Kreis_01.tex}
 \end{frame}
 
 \end{document}

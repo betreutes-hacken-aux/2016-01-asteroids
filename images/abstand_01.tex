@@ -1,0 +1,9 @@
+\psset{xunit=1cm,yunit=1cm,runit=1cm}
+\begin{pspicture}(0,-0.5)(10,4)
+  \psaxes(0,0)(10,0)
+  \psaxes(0,0)(0,4)
+  \pscircle[fillcolor=black](3,2){0.1}
+  \pscircle(6,3){0.1}
+  \psline[linecolor=red](3,2)(6,3)
+  \only<2>{\psline[linecolor=green](3,2)(6,2)(6,3)}
+\end{pspicture}
