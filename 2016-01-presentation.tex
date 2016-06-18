@@ -10,6 +10,12 @@
 \begin{document}
 
 \begin{frame}
+\frametitle{Game Loop}
+\framesubtitle{o}
+\end{frame}
+
+
+\begin{frame}
 \frametitle{Bewegung}
 \framesubtitle{Homogene Koordinaten}
 \textbf{Karthesische Koordinaten (2D) zu homogenen Koordinaten:}
@@ -196,6 +202,12 @@ bearbeitet werden.
 
 
 \begin{frame}
+\frametitle{Pew! Pew! Pew!}
+\framesubtitle{$|>$  - - - - -}
+\end{frame}
+
+
+\begin{frame}
 \frametitle{Kollision}
 \framesubtitle{Schnitt geometrischer Objekte}
 \begin{center}
@@ -211,10 +223,20 @@ bearbeitet werden.
 \framesubtitle{Schnitt geometrischer Objekte}
 \textbf{Erinnerung an Schulgeometrie}
 \input{images/abstand_01.tex}
-Zwei Punkte mit Positionen $(x_{1},y_{1}$ und $(x_{2},y_{2}$
-haben den Abstand
-\[ \sqrt{(x_{1}-x_{2})^{2} + (y_{1}-y_{2})^{2}} \]
-zueinander.
+\begin{minipage}[5cm][3mm][s]{8cm}
+\only<1>{%
+Zwei Punkte mit Positionen $(x_{1},y_{1})$ und $(x_{2},y_{2})$.%
+}%
+\only<2>{%
+Sei $\Delta x := x_{2}-x_{1}$ und $\Delta y := y_{2}-y_{1}$.
+Dann beträgt Abstand der Punkte% $\sqrt{{\Delta x}^{2} + {\Delta y}^{2}}$.
+}%
+\only<3>{%
+Der Winkel~$\varphi$ eines Segments zur $x$-Achse
+lässt sich wie folgt errechnen:
+$\varphi := arctan2({\Delta y},{\Delta x})$%
+}%
+\end{minipage}
 \end{frame}
 
 \begin{frame}
