@@ -1,0 +1,177 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+\title{Asteroids}
+\date{23. Juni 2016}
+
+\begin{document}
+\maketitle
+
+\section{Gameloop}
+
+\section{Movement}
+\subsection{Homogene Koordinaten}
+(Die in diesem Abschnitt für 2D behandelten Techniken
+lassen sich ohne Probleme auf 3D übertragen.)
+Der Vorteil von homogenen Koordinaten besteht darin,
+dass sich eine beliebige Verkettung
+aufeinanderfolgender Translationen und Rotationen
+zu einer Matrix zusammengefasst werden kann.
+\subsubsection{Karthesische Koordinaten zu homogenen Koordinaten}
+\begin{description}
+ \item[Ortsvektoren:]
+  \begin{equation}
+   \left(\begin{array}{c}
+    x \\
+    y \\
+   \end{array}\right)
+   \rightarrow
+   \left(\begin{array}{c}
+    x \\
+    y \\
+    1 \\
+   \end{array}\right)
+  \end{equation}
+
+ \item[Richtungsvektoren:]
+  \begin{equation}
+   \left(\begin{array}{c}
+    x \\
+    y \\
+   \end{array}\right)
+   \rightarrow
+   \left(\begin{array}{c}
+    x \\
+    y \\
+    0 \\
+   \end{array}\right)
+  \end{equation}
+\end{description}
+
+\subsubsection{Rotation und Translation}
+\begin{description}
+ \item[Rotationsmatriz]
+  für Rotation um $\varphi$ entgegen dem Uhrzeigersinn:
+  \begin{equation}
+   \left(\begin{array}{ccc}
+    cos(\varphi) & -sin(\varphi) & 0 \\
+    sin(\varphi) & cos(\varphi) & 0 \\
+    0 & 0 & 1 \\
+   \end{array}\right)
+  \end{equation}
+  Anwendung:
+  \begin{equation}
+   \left(\begin{array}{ccc}
+    cos(\varphi) & -sin(\varphi) & 0 \\
+    sin(\varphi) & cos(\varphi) & 0 \\
+    0 & 0 & 1 \\
+   \end{array}\right)
+   \cdot
+   \left(\begin{array}{ccc}
+    x \\
+    y \\
+    w \\
+   \end{array}\right)
+   =
+   \left(\begin{array}{ccc}
+    x \cdot cos(\varphi) - y \cdot sin(\varphi) \\
+    x \cdot sin(\varphi) + y \cdot cos(\varphi) \\
+    w \\
+   \end{array}\right)
+  \end{equation}
+  Beispiel: Den Punkt $(2, 1)^{T}$ um $90^{\circ}$ rotieren.
+  \begin{equation}
+   \left(\begin{array}{ccc}
+    cos(90^{\circ}) & -sin(90^{\circ}) & 0 \\
+    sin(90^{\circ}) & cos(90^{\circ}) & 0 \\
+    0 & 0 & 1 \\
+   \end{array}\right)
+   \cdot
+   \left(\begin{array}{ccc}
+    2 \\
+    1 \\
+    1 \\
+   \end{array}\right)
+   =
+   \left(\begin{array}{ccc}
+    -1 \\
+    2 \\
+    1 \\
+   \end{array}\right)
+  \end{equation}
+
+ \item[Translation:]
+  \begin{equation}
+   \left(\begin{array}{ccc}
+    1 & 0 & t_{x} \\
+    0 & 1 & t_{y} \\
+    0 & 0 & 1 \\
+   \end{array}\right)
+  \end{equation}
+  Anwendung auf einen Richtungsvektor:
+  \begin{equation}
+   \left(\begin{array}{ccc}
+    1 & 0 & t_{x} \\
+    0 & 1 & t_{y} \\
+    0 & 0 & 1 \\
+   \end{array}\right)
+   \cdot
+   \left(\begin{array}{ccc}
+    x \\
+    y \\
+    w \\
+   \end{array}\right)
+   =
+   \left(\begin{array}{ccc}
+    x + t_{x} \cdot w \\
+    y + t_{y} \cdot w \\
+    w \\
+   \end{array}\right)
+  \end{equation}
+  Beobachtung:
+  Eine Translation wirkt nur auf Ortsvektoren,
+  nicht auf Richtungsvektoren,
+  da für diese $w = 0$.
+\end{description}
+
+\subsection{OpenGL 2.x}
+Zwei Matrizen:
+\begin{description}
+ \item[Modelview Matrix]
+ \item[Projection Matrix]
+\end{description}
+\texttt{glMatrixMode(mode)} legt fest,
+welche Matrix aktuell bearbeitet werden soll.
+Diese kann mit Befehlen wie
+\texttt{glPopMatrix},
+\texttt{glLoadIdentity},
+\texttt{glPushMatrix},
+\texttt{glMultMatrix},
+\texttt{glRotated} und
+\texttt{glTranslated}
+bearbeitet werden.
+
+\subsection{OpenGL 4.x}
+
+
+\section{Pew! Pew! Pew!}
+
+\section{Schnitterkennung}
+\subsection{Kreis mit Kreis}
+Ein Kreis lässt sich über seine Position~$(x, y)^{T}$
+und seinen Radius~$r$ spezifizieren.
+Zwei Kreise mit Positionen~$(x_{1}, y_{1})^{T}$ und~$(x_{2}, y_{2})^{T}$
+und Radien~$r_{1}$ und~$r_{2}$ überschneiden sich genau dann,
+wenn $\sqrt{(x_{1} - x_{2})^{2} + (y_{1} - y_{2})^{2}} < r_{1} + r_{2}$.
+
+\subsection{Konvexes Polygon mit konvexem Polygon}
+Zwei konvexe Polygone~$P_{1}$ und~$P_{2}$ überschneiden sich genau dann,
+wenn es keine Trennlinie gibt.
+
+\subsection{konvexem Polygon mit Kreis}
+
+\bibliography{referenzen.bib}
+
+\end{document}

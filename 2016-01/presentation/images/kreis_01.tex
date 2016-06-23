@@ -1,0 +1,10 @@
+\psset{xunit=1cm,yunit=1cm,runit=1cm}
+\begin{pspicture}(0,-0.5)(10,4)
+  \psaxes(0,0)(10,0)
+  \psaxes(0,0)(0,4)
+  \only<2>{\psline[linecolor=red](3,2)(6,3)}
+  \pscircle[fillcolor=black,fillstyle=solid](3,2){0.03}
+  \pscircle[fillcolor=black,fillstyle=solid](6,3){0.03}
+  \pscircle[linecolor=blue](3,2){1.5}
+  \pscircle[linecolor=blue](6,3){1}
+\end{pspicture}

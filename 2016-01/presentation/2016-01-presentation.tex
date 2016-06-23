@@ -1,0 +1,277 @@
+\documentclass[dvips,12pt,xcolor=table]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{pstricks}
+\usepackage{pst-plot}
+\usepackage{minted}
+\usepackage{lmodern}
+
+\begin{document}
+
+\begin{frame}
+\frametitle{Game Loop}
+\framesubtitle{o}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Bewegung}
+\framesubtitle{Homogene Koordinaten}
+\textbf{Karthesische Koordinaten (2D) zu homogenen Koordinaten:}
+\begin{description}
+ \item[Ortsvektoren:]
+  \begin{equation}
+   \left(\begin{array}{c}
+    x \\
+    y \\
+   \end{array}\right)
+   \rightarrow
+   \left(\begin{array}{c}
+    x \\
+    y \\
+    1 \\
+   \end{array}\right)
+  \end{equation}
+
+ \item[Richtungsvektoren:]
+  \begin{equation}
+   \left(\begin{array}{c}
+    x \\
+    y \\
+   \end{array}\right)
+   \rightarrow
+   \left(\begin{array}{c}
+    x \\
+    y \\
+    0 \\
+   \end{array}\right)
+  \end{equation}
+\end{description}
+\end{frame}
+
+\begin{frame}
+\frametitle{Bewegung}
+\framesubtitle{Homogene Koordinaten}
+\textbf{Homogenen Koordinaten (2D) zu karthesischen Koordinaten: \\}
+\begin{equation}
+ \left(\begin{array}{c}
+  x \\
+  y \\
+  w \\
+ \end{array}\right)
+ \rightarrow
+ \left(\begin{array}{c}
+  \frac{x}{w} \\
+  \\
+  \frac{y}{w} \\
+ \end{array}\right)
+\end{equation}
+\end{frame}
+
+\begin{frame}
+\frametitle{Bewegung}
+\framesubtitle{Homogene Koordinaten}
+\textbf{Rotationen: \\}
+Rotation um $\varphi$ entgegen dem Uhrzeigersinn:
+\begin{equation}
+ \left(\begin{array}{ccc}
+  cos(\varphi) & -sin(\varphi) & 0 \\
+  sin(\varphi) & cos(\varphi) & 0 \\
+  0 & 0 & 1 \\
+ \end{array}\right)
+\end{equation}
+\hspace{2mm}
+Beispiel: Den Punkt $(2, 1)^{T}$ um $90^{\circ}$ rotieren.
+\begin{equation}
+ \left(\begin{array}{ccc}
+  cos(90^{\circ}) & -sin(90^{\circ}) & 0 \\
+  sin(90^{\circ}) & cos(90^{\circ}) & 0 \\
+  0 & 0 & 1 \\
+ \end{array}\right)
+ \cdot
+ \left(\begin{array}{ccc}
+  2 \\
+  1 \\
+  1 \\
+ \end{array}\right)
+ =
+ \left(\begin{array}{ccc}
+  -1 \\
+  2 \\
+  1 \\
+ \end{array}\right)
+\end{equation}
+\end{frame}
+
+\begin{frame}
+\frametitle{Bewegung}
+\framesubtitle{Homogene Koordinaten}
+\textbf{Translationen: \\}
+\begin{equation}
+ \left(\begin{array}{ccc}
+  1 & 0 & t_{x} \\
+  0 & 1 & t_{y} \\
+  0 & 0 & 1 \\
+ \end{array}\right)
+\end{equation}
+Anwendung auf einen Richtungsvektor:
+\begin{equation}
+ \left(\begin{array}{ccc}
+  1 & 0 & t_{x} \\
+  0 & 1 & t_{y} \\
+  0 & 0 & 1 \\
+ \end{array}\right)
+ \cdot
+ \left(\begin{array}{ccc}
+  x \\
+  y \\
+  w \\
+ \end{array}\right)
+ =
+ \left(\begin{array}{ccc}
+  x + t_{x} \cdot w \\
+  y + t_{y} \cdot w \\
+  w \\
+ \end{array}\right)
+\end{equation}
+Beobachtung:
+Eine Translation wirkt sich nur auf Ortsvektoren,
+nicht auf Richtungsvektoren aus,
+da für diese $w = 0$.
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Bewegung}
+\framesubtitle{OpenGL 2.x}
+Zwei Matrizen:
+\begin{description}
+ \item[Modelview Matrix] \hfill \\
+  Auslesbar mit
+  \texttt{glGetFloatv(GL\_MODELVIEW\_MATRIX)}.
+  Diese Matrix wird zuallerst
+  auf alle übergebenen 3D-Koordinaten angewendet.
+ \item[Projection Matrix] \hfill \\
+  Auslesbar mit
+  \texttt{glGetFloatv(GL\_PROJECTION\_MATRIX)}.
+  Ihre Aufgabe besteht darin 3D-Koordinaten
+  auf eine 2D-Fläche zu projizieren.
+\end{description}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Bewegung}
+\framesubtitle{OpenGL 2.x}
+Auslesen mit \texttt{glGetFloatv}:\\
+\vspace{0.3cm}
+\textbf{C/C++:}
+\begin{minted}{c}
+GLfloat *m1 = new GLfloat[16];
+GLfloat *m2 = new GLfloat[16];
+glGetFloatv(GL_MODELVIEW_MATRIX, m1);
+glGetFloatv(GL_PROJECTION_MATRIX, m2);
+\end{minted}
+\vspace{0.3cm}
+\textbf{Python:}
+\begin{minted}{python}
+m1 = glGetFloatv(GL_MODELVIEW_MATRIX)
+m2 = glGetFloatv(GL_PROJECTION_MATRIX)
+\end{minted}
+\end{frame}
+
+\begin{frame}
+\frametitle{Bewegung}
+\framesubtitle{OpenGL 2.x}
+Zwei Matrizen:
+\begin{description}
+ \item[Modelview Matrix]
+ \item[Projection Matrix]
+\end{description}
+\texttt{glMatrixMode(mode)} legt fest,
+welche Matrix aktuell bearbeitet werden soll.
+Diese kann mit Befehlen wie
+\texttt{glPopMatrix},
+\texttt{glLoadIdentity},
+\texttt{glPushMatrix},
+\texttt{glMultMatrix},
+\texttt{glRotated} und
+\texttt{glTranslated}
+bearbeitet werden.
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Pew! Pew! Pew!}
+\framesubtitle{$|>$  - - - - -}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Kollision}
+\framesubtitle{Schnitt geometrischer Objekte}
+\begin{center}
+\input{images/dummy_square.tex}
+\input{images/dummy_square.tex}
+\end{center}
+\textbf{Vorteil:} einfach zu realisieren \\
+\textbf{Nachtteil:} nicht exakt
+\end{frame}
+
+\begin{frame}
+\frametitle{Kollision}
+\framesubtitle{Schnitt geometrischer Objekte}
+\textbf{Erinnerung an Schulgeometrie}
+\input{images/abstand_01.tex}
+\begin{minipage}[5cm][3mm][s]{8cm}
+\only<1>{%
+Zwei Punkte mit Positionen $(x_{1},y_{1})$ und $(x_{2},y_{2})$.%
+}%
+\only<2>{%
+Sei $\Delta x := x_{2}-x_{1}$ und $\Delta y := y_{2}-y_{1}$.
+Dann beträgt Abstand der Punkte% $\sqrt{{\Delta x}^{2} + {\Delta y}^{2}}$.
+}%
+\only<3>{%
+Der Winkel~$\varphi$ eines Segments zur $x$-Achse
+lässt sich wie folgt errechnen:
+$\varphi := arctan2({\Delta y},{\Delta x})$%
+}%
+\end{minipage}
+\end{frame}
+
+\begin{frame}
+\frametitle{Kollision}
+\framesubtitle{Schnitt geometrischer Objekte}
+\textbf{Kreis mit Kreis}
+\input{images/kreis_01.tex}
+Seien $P_{1}$ und $P_{2}$ die Mittelpunkte zweier Kreise
+mit Radien $r_{1}$ und $r_{2}$.
+Die Kreise schneiden sich genau dann, wenn
+\[ abstand(P_{1}, P_{2}) < r_{1} + r_{2}. \]
+\end{frame}
+
+\begin{frame}
+\frametitle{Kollision}
+\framesubtitle{Schnitt geometrischer Objekte}
+\begin{center}
+{\LARGE Zu einfach?} \\
+\vspace{0.4cm}
+\only<2>{\LARGE Keine Sorge. Es wird besser.}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Kollision}
+\framesubtitle{Schnitt geometrischer Objekte}
+\textbf{Konvexes Polygon mit konvexem Polygon}
+\input{images/konvPolygon_01.tex}
+\end{frame}
+
+\begin{frame}
+\frametitle{Kollision}
+\framesubtitle{Schnitt geometrischer Objekte}
+\textbf{Konvexes Polygon mit Kreis}
+\input{images/konvPolygon_Kreis_01.tex}
+\end{frame}
+
+\end{document}
