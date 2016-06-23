@@ -51,7 +51,7 @@ class Spaceship:
 
 spaceship = Spaceship()
 projectiles = []
-asteroids = None
+asteroids = []
 
 if __name__ == "__main__":
     # Game loop
