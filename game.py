@@ -57,7 +57,7 @@ if __name__ == "__main__":
     # Game loop
     while not shutdown:
         # Event handling
-        pressed_keys = pygame.keys.get_pressed()
+        pressed_keys = pygame.key.get_pressed()
 
         # World update
         spaceship.update()
