@@ -17,7 +17,7 @@ import OpenGL.GL as GL
 import OpenGL.GLU as GLU
 import OpenGL.GLUT as GLUT
 
-debug = False
+debug = True
 prMatrices = False
 numAstroids = 5
 freeze = True
@@ -114,12 +114,7 @@ def display():
 	global ship
 	global astroids
 	
-	if debug:
-		print("entering display()")
-	
 	GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
-
-	
 	GL.glMatrixMode(GL.GL_MODELVIEW)
 	GL.glLoadIdentity()
 	
@@ -145,14 +140,12 @@ def display():
 	GL.glEnable(GL.GL_DEPTH_TEST);
 
 	GLUT.glutSwapBuffers()
-	
-	if debug:
-		print("leaving display()")
+
 
 def displayStop():
 	GLUT.glutPostRedisplay()
 
-def init(mipmapping = False):
+def init():
 	# Bedienungsanleitung ausgeben:
 	print("Keine Steuerung.")
 	
@@ -198,7 +191,7 @@ if __name__ == '__main__':
 	GLUT.glutInitWindowSize(300, 300)
 	GLUT.glutInitWindowPosition(100, 100)
 	GLUT.glutCreateWindow('Asteroids Template #1')
-	init() # Alternativ: init(True) # falls MipMapping aktiviert sein soll
+	init()
 	GLUT.glutDisplayFunc(display)
 	GLUT.glutReshapeFunc(reshape)
 	GLUT.glutMouseFunc(mouse)
